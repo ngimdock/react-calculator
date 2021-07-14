@@ -1,56 +1,71 @@
 import logo from './logo.svg';
 import React, {useState} from 'react';
 import './App.css';
+import { tSTypeOperator } from '@babel/types';
 
 function App() {
 
-  const [affichage, setAffichage] = useState("hey");
-  const [operande, setOperande] = useState("");
-  const [operateur, setOperateur] = useState("+");
+  const [result, setresult] = useState("");
 
-  function handleChange(chaine){
-    console.log(affichage);
-    setAffichage(affichage + " " + chaine);
-    console.log(affichage);
+  const handleClick = (event) => {
+    console.clear();
+    console.log(event.target);
+    setresult(result.concat(event.target.name));
   }
+
+  const handleDelete = () => {
+    setresult(result.slice(0, result.length -1));
+  };
+
+  const calculate = ()  => {
+    try{
+      setresult(eval(result).toString());
+    }catch(error){
+      setresult("Error")
+    }
+  };
+
   return (
     <>
       <h3>POUR MON PROGRAMME HELLO WORLD J'AI DÉCIDE DE FAIRE UNE CALCULATRICE BASIQUE</h3>
 
       <section>
-        <div className="result-block"> <span>{affichage}</span> </div>
+        <form > 
+          <input type="text" value={result} />
+        </form>
+
         <div className="num-block">
           <div className="items">
-            <div className="big" onClick={() => setOperande("")}>Clear</div>
-            <div className="small">C</div>
-            <div className="small"> ÷ </div>
+            <button  className="small" onClick={handleDelete}>C</button>
+            <button name="/" className="small" onClick={handleClick}> ÷ </button>
+            <button  className="big" onClick={() =>  setresult("")}>Clear</button>
           </div>
 
           <div className="items">
-            <div className="small" onClick={() => handleChange("7")}>7</div>
-            <div className="small">8</div>
-            <div className="small">9</div>
-            <div className="small">×</div>
+            <button name="7" className="small" onClick={ (event) =>  handleClick(event)}>7</button>
+            <button name="8" className="small" onClick={handleClick}>8</button>
+            <button name="9" className="small" onClick={handleClick}>9</button>
+            <button name=" × " className="small" onClick={handleClick}>×</button>
           </div>
 
           <div className="items">
-            <div className="small">4</div>
-            <div className="small">5</div>
-            <div className="small">6</div>
-            <div className="small">-</div>
+            <button name="4" className="small" onClick={handleClick}>4</button>
+            <button name="5" className="small" onClick={handleClick}>5</button>
+            <button name="6" className="small" onClick={handleClick}>6</button>
+            <button name=" - " className="small" onClick={handleClick}>-</button>
           </div>
 
           <div className="items">
-            <div className="small">1</div>
-            <div className="small">2</div>
-            <div className="small">3</div>
-            <div className="small">+</div>
+            <button name="1" className="small" onClick={handleClick}>1</button>
+            <button name="2" className="small" onClick={handleClick}>2</button>
+            <button name="3" className="small" onClick={handleClick}>3</button>
+            <button name=" + " className="small" onClick={handleClick}>+</button>
           </div>
 
           <div className="items">
-            <div className="small">0</div>
-            <div className="small">.</div>
-            <div className="big">=</div>
+            <button name="0" className="small" onClick={handleClick}>0</button>
+            <button name="." className="small" onClick={handleClick}>.</button>
+            <button  className="big" onClick={calculate}>=</button>
           </div>
         </div>
       </section>
