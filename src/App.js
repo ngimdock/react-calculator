@@ -1,7 +1,5 @@
-import logo from './logo.svg';
 import React, {useState} from 'react';
 import './App.css';
-import { tSTypeOperator } from '@babel/types';
 
 function App() {
 
